@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <cmath>
 using Number = double;
 
 // Возвращает true, если удалось прочитать число

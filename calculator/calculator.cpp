@@ -1,5 +1,7 @@
 #include "calculator.h"
-
+#include <iostream>
+#include <string>
+#include <cmath>
 // глобальная переменная для хранения считанного результата
 std::string data;
 
@@ -14,7 +16,6 @@ bool ReadNumber(Number& result)
     std::strtod(data.c_str(), &end);
     if (*end != '\0')
     {
-        //std::cerr << "Error: Numeric operand expected" << std::endl;
         return false;
     }
     // если данные являются числом, то в переменную result записываем число
@@ -29,6 +30,18 @@ bool RunCalculatorCycle()
     Number value = 0.0;
     // переменная для сохранения результата в отдельной ячейке памяти
     Number result_memory = 0.0;
+
+    /*
+        Дмитрий Федоров:
+        "Чтобы не заморачиваться с обилием булевских флагов,
+        я бы проверял просто чаровские символы,
+        это сократит код и упростит его поддержку" 
+
+        Можно пожалуйста поподробнее про данное предположения,
+        не могу понять, что имеется ввиду. Дело в том, что я считываю поэлементно.
+        Я не могу знать наперед будет дальше значение или нет, а предыдущую операцию
+        надо как-то сохранить.
+    */
     // флаг знака плюс
     bool plus = false;
     // флаг знака минус
@@ -101,12 +114,30 @@ bool RunCalculatorCycle()
         }
         
         error = true;
-        if (data == ":") setup = true;
-        else if (data == "+") plus = true;
-        else if (data == "-") minus = true;
-        else if (data == "/") dev = true;
-        else if (data == "*") mult = true;
-        else if (data == "**") deg = true;
+        if (data == ":")
+        {
+            setup = true;
+        }
+        else if (data == "+")
+        {
+            plus = true;
+        }
+        else if (data == "-")
+        {
+            minus = true;
+        }
+        else if (data == "/")
+        {
+            dev = true;
+        }
+        else if (data == "*")
+        {
+            mult = true;
+        }
+        else if (data == "**")
+        {
+            deg = true;
+        }
         else if (data == "=")
         {
             std::cout << result << std::endl;
